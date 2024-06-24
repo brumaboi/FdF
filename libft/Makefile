@@ -6,7 +6,7 @@
 #    By: sbruma <sbruma@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/13 12:12:14 by sbruma            #+#    #+#              #
-#    Updated: 2024/05/16 10:56:20 by sbruma           ###   ########.fr        #
+#    Updated: 2024/05/22 18:35:25 by sbruma           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -54,7 +54,10 @@ FTIS_DIR		=	$(SRC_DIR)ft_is/ft_isalnum.c \
 					$(SRC_DIR)ft_is/ft_isalpha.c \
 					$(SRC_DIR)ft_is/ft_isascii.c \
 					$(SRC_DIR)ft_is/ft_isdigit.c \
-					$(SRC_DIR)ft_is/ft_isprint.c 
+					$(SRC_DIR)ft_is/ft_isprint.c \
+					$(SRC_DIR)ft_is/ft_ismin.c \
+					$(SRC_DIR)ft_is/ft_ismax.c \
+					$(SRC_DIR)ft_is/ft_isspace.c \
 
 FTMEM_DIR		=	$(SRC_DIR)ft_mem/ft_bzero.c \
 					$(SRC_DIR)ft_mem/ft_calloc.c \
