@@ -6,7 +6,7 @@
 /*   By: sbruma <sbruma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 16:48:04 by sbruma            #+#    #+#             */
-/*   Updated: 2024/06/25 16:57:22 by sbruma           ###   ########.fr       */
+/*   Updated: 2024/06/25 18:24:48 by sbruma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@ void	fill_map(int fd, t_fdf *ptr)
 		y++;
 		free(line);
 		free_split(split_line);
+		line = get_next_line(fd);
 	}
 }
 
@@ -112,6 +113,7 @@ void	read_map_dimensions(int fd, t_fdf *ptr)
 		ptr->height++;
 		free(line);
 		free_split(split_line);
+		line = get_next_line(fd);
 	}
 }
 

@@ -6,7 +6,7 @@
 /*   By: sbruma <sbruma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 22:23:10 by sbruma            #+#    #+#             */
-/*   Updated: 2024/06/25 16:52:25 by sbruma           ###   ########.fr       */
+/*   Updated: 2024/06/25 17:24:04 by sbruma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,5 +78,6 @@ void    parse_point(char *str, t_map *map, int x, int y);
 uint32_t hex_to_uint(char *hex);
 void    free_split(char **split);
 
+void draw_map(t_fdf *ptr);
 
 #endif
