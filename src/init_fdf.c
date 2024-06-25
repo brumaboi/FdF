@@ -6,119 +6,128 @@
 /*   By: sbruma <sbruma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 16:48:04 by sbruma            #+#    #+#             */
-/*   Updated: 2024/06/24 17:10:15 by sbruma           ###   ########.fr       */
+/*   Updated: 2024/06/25 16:57:22 by sbruma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/fdf.h"
 
-static int	ft_wordcount(char *str, char c)
+uint32_t	hex_to_uint(char *hex)
+{
+	uint32_t	color;
+	int			len;
+	int			base;
+	char		*base_chars;
+
+	base_chars = "0123456789ABCDEF";
+	len = ft_strlen(hex);
+	color = 0;
+	base = 1;
+	while (--len >= 0)
+	{
+		color += (ft_strchr(base_chars,
+					ft_toupper(hex[len])) - base_chars) * base;
+		base *= 16;
+	}
+	return (color);
+}
+
+void	parse_point(char *str, t_map *map, int x, int y)
+{
+	char		**parts;
+	int			z;
+	uint32_t	color;
+
+	parts = ft_split(str, ',');
+	z = ft_atoi(parts[0]);
+	if (parts[1])
+		color = hex_to_uint(parts[1]);
+	else
+		color = 0xFFFFFFFF;
+	map->x = x;
+	map->y = y;
+	map->z = z;
+	map->color = color;
+	free_split(parts);
+}
+
+void	fill_map(int fd, t_fdf *ptr)
+{
+	char	*line;
+	char	**split_line;
+	int		x;
+	int		y;
+
+	y = 0;
+	line = get_next_line(fd);
+	while (line != NULL)
+	{
+		split_line = ft_split(line, ' ');
+		x = 0;
+		while (split_line[x])
+		{
+			parse_point(split_line[x], &ptr->map[y * ptr->width + x], x, y);
+			x++;
+		}
+		y++;
+		free(line);
+		free_split(split_line);
+	}
+}
+
+void	allocate_map_memory(t_fdf *ptr)
+{
+	ptr->map = (t_map *)malloc(sizeof(t_map) * (ptr->width * ptr->height));
+	if (!ptr->map)
+		error("Memory allocation failed\n");
+}
+
+void	free_split(char **split)
 {
 	int	i;
-	int	count;
-	int	in_word;
 
 	i = 0;
-	count = 0;
-	in_word = 0;
-	while (str[i])
+	while (split[i])
 	{
-		if (str[i] != c && !in_word)
-		{
-			in_word = 1;
-			count++;
-		}
-		else if (str[i] == c)
-			in_word = 0;
+		free(split[i]);
 		i++;
 	}
-	return (count);
+	free(split);
 }
 
-static void	read_fdf(char *path, t_fdf *ptr)
+void	read_map_dimensions(int fd, t_fdf *ptr)
 {
-	int		fd;
-	int		i;
-	int		j;
 	char	*line;
-	char	**split;
+	char	**split_line;
 
-	fd = open(path, O_RDONLY);
-	if (fd == -1)
+	ptr->height = 0;
+	ptr->width = 0;
+	line = get_next_line(fd);
+	while (line != NULL)
 	{
-		perror("Error opening file");
-		exit(1);
-	}
-	i = 0;
-	while ((line = get_next_line(fd)) != NULL)
-	{
-		split = ft_split(line, ' ');
-		j = 0;
-		while (split[j])
-		{
-			ptr->map[i * ptr->width + j].x = j;
-			ptr->map[i * ptr->width + j].y = i;
-			ptr->map[i * ptr->width + j].z = ft_atoi(split[j]);
-			if (i == 0 && j == 0)
-			{
-				ptr->map[i * ptr->width + j].max_z = ptr->map[i * ptr->width + j].z;
-				ptr->map[i * ptr->width + j].min_z = ptr->map[i * ptr->width + j].z;
-			}
-			else
-			{
-				if (ptr->map[i * ptr->width + j].z > ptr->map[0].max_z)
-					ptr->map[0].max_z = ptr->map[i * ptr->width + j].z;
-				if (ptr->map[i * ptr->width + j].z < ptr->map[0].min_z)
-					ptr->map[0].min_z = ptr->map[i * ptr->width + j].z;
-			}
-			j++;
-		}
-		for (int k = 0; split[k]; k++)
-			free(split[k]);
-		free(split);
+		split_line = ft_split(line, ' ');
+		if (ptr->height == 0)
+			while (split_line[ptr->width])
+				ptr->width++;
+		ptr->height++;
 		free(line);
-		i++;
+		free_split(split_line);
 	}
-	close(fd);
-}
-
-static void	set_sizes(char *path, t_fdf *ptr)
-{
-	int		fd;
-	char	*line;
-	int		width;
-	int		height;
-	int		current_width;
-
-	fd = open(path, O_RDONLY);
-	if (fd == -1)
-	{
-		perror("Error opening file");
-		exit(1);
-	}
-	width = 0;
-	height = 0;
-	while ((line = get_next_line(fd)) != NULL)
-	{
-		current_width = ft_wordcount(line, ' ');
-		if (current_width > width)
-			width = current_width;
-		height++;
-		free(line);
-	}
-	ptr->width = width;
-	ptr->height = height;
-	close(fd);
 }
 
 void	init_fdf(char *path, t_fdf *ptr)
 {
-	set_sizes(path, ptr);
-	ptr->map = (t_map *)malloc(sizeof(t_map) * ptr->width * ptr->height);
-	if (!ptr->map)
-	{
-		perror("Error allocating memory");
-		exit(1);
-	}
-	read_fdf(path, ptr);
+	int	fd;
+
+	fd = open(path, O_RDONLY);
+	if (fd < 0)
+		error("Failed to open file\n");
+	read_map_dimensions(fd, ptr);
+	close(fd);
+	allocate_map_memory(ptr);
+	fd = open(path, O_RDONLY);
+	if (fd < 0)
+		error("Failed to open file\n");
+	fill_map(fd, ptr);
+	close(fd);
 }

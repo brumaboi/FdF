@@ -6,7 +6,7 @@
 /*   By: sbruma <sbruma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 20:45:25 by sbruma            #+#    #+#             */
-/*   Updated: 2024/06/24 17:08:22 by sbruma           ###   ########.fr       */
+/*   Updated: 2024/06/25 16:47:49 by sbruma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,10 +44,7 @@ static int	check_format(char *path)
 void	window_setup(char **argv, t_fdf *ptr)
 {
 	if (!check_format(argv[1]))
-	{
-		ft_putstr("Wrong file format! Allowed format: .fdf\n");
-		exit(1);
-	}
+		error("Invalid file format\n");
 	init_fdf(argv[1], ptr);
 	center_img(ptr);
 	ptr->scale = ft_ismin(WINDOW_WIDTH / ptr->width,

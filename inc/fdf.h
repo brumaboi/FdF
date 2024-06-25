@@ -6,7 +6,7 @@
 /*   By: sbruma <sbruma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 22:23:10 by sbruma            #+#    #+#             */
-/*   Updated: 2024/06/24 17:10:24 by sbruma           ###   ########.fr       */
+/*   Updated: 2024/06/25 16:52:25 by sbruma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ typedef struct s_map_xyz
 	int	z;
 	int	max_z;
 	int	min_z;
+	uint32_t color;
 }	t_map;
 
 typedef struct s_point_xy
@@ -60,6 +61,7 @@ typedef struct s_fdf
 //fdf_utils.c
 void	key_hook(mlx_key_data_t keydata, void *param);
 void	fill_image(mlx_image_t *image, uint32_t color);
+void	error(char *message);
 
 //init_mlx.c
 void	init_mlx(t_fdf *ptr);
@@ -68,6 +70,13 @@ void	init_mlx(t_fdf *ptr);
 void	window_setup(char **argv, t_fdf *ptr);
 
 //init_fdf.c
-void	init_fdf(char *path, t_fdf *ptr);
+void    init_fdf(char *path, t_fdf *ptr);
+void    allocate_map_memory(t_fdf *ptr);
+void    read_map_dimensions(int fd, t_fdf *ptr);
+void    fill_map(int fd, t_fdf *ptr);
+void    parse_point(char *str, t_map *map, int x, int y);
+uint32_t hex_to_uint(char *hex);
+void    free_split(char **split);
+
 
 #endif

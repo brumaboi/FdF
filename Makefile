@@ -6,7 +6,7 @@
 #    By: sbruma <sbruma@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/20 22:20:12 by sbruma            #+#    #+#              #
-#    Updated: 2024/06/24 18:01:23 by sbruma           ###   ########.fr        #
+#    Updated: 2024/06/25 16:58:07 by sbruma           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -39,7 +39,7 @@ SRC 			= $(SRC_DIR)fdf.c \
 				$(SRC_DIR)fdf_utils.c \
 				$(SRC_DIR)init_mlx.c \
 				$(SRC_DIR)init_fdf.c \
-				$(SRC_DIR)window_setup.c
+				$(SRC_DIR)window_setup.c 
 		
 OBJ = $(patsubst $(SRC_DIR)%.c,$(OBJ_DIR)%.o,$(SRC))
 

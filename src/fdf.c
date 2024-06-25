@@ -6,7 +6,7 @@
 /*   By: sbruma <sbruma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 22:20:20 by sbruma            #+#    #+#             */
-/*   Updated: 2024/06/24 18:04:58 by sbruma           ###   ########.fr       */
+/*   Updated: 2024/06/25 16:47:42 by sbruma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,7 @@ int	main(int argc, char **argv)
 	t_fdf	ptr;
 
 	if (argc != 2)
-	{
-		ft_putstr("Usage: ./fdf <filename>\n");
-		return (1);
-	}
+        error("Usage: ./fdf <filename>\n");
 	window_setup(argv, &ptr);
 	init_mlx(&ptr);
 	fill_image(ptr.canvas, 0x000000FF);

@@ -6,7 +6,7 @@
 /*   By: sbruma <sbruma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 22:20:33 by sbruma            #+#    #+#             */
-/*   Updated: 2024/06/24 17:00:58 by sbruma           ###   ########.fr       */
+/*   Updated: 2024/06/25 14:43:25 by sbruma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,4 +38,10 @@ void	fill_image(mlx_image_t *image, uint32_t color)
 			x = 0;
 		}
 	}
+}
+
+void	error(char *message)
+{
+	ft_putstr(message);
+	exit(1);
 }
