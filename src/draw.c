@@ -6,7 +6,7 @@
 /*   By: sbruma <sbruma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/25 17:09:06 by sbruma            #+#    #+#             */
-/*   Updated: 2024/06/26 12:25:34 by sbruma           ###   ########.fr       */
+/*   Updated: 2024/06/26 12:51:23 by sbruma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,42 +40,44 @@ static int	in_bounds(int x, int y)
 	return (x >= 0 && x < WINDOW_WIDTH && y >= 0 && y < WINDOW_HEIGHT);
 }
 
+void	init_line(t_pos *start, t_pos *end, t_line *params)
+{
+	params->dx = abs(end->x - start->x);
+	params->dy = abs(end->y - start->y);
+	if (start->x < end->x)
+		params->sx = 1;
+	else
+		params->sx = -1;
+
+	if (start->y < end->y)
+		params->sy = 1;
+	else
+		params->sy = -1;
+	params->err = params->dx - params->dy;
+}
+
 void place_line(mlx_image_t *img, t_pos start, t_pos end, uint32_t color)
 {
-	int	dx;
-	int	dy;
-	int	sx;
-	int	sy;
-	int	err;
+	int		tmp;
+	t_line	params;
 
-	dx = abs(end.x - start.x);
-	dy = abs(end.y - start.y);
-	err = dx - dy;
-	if (start.x < end.x)
-		sx = 1;
-	else
-		sx = -1;
-
-	if (start.y < end.y)
-		sy = 1;
-	else
-		sy = -1;
-
+	init_line(&start, &end, &params);
 	while (1)
 	{
 		if (in_bounds(start.x, start.y))
 			mlx_put_pixel(img, start.x, start.y, color);
 		if (start.x == end.x && start.y == end.y)
 			break ;
-		if ((err * 2) > -dy)
+		tmp = params.err * 2;
+		if (tmp > -(params.dy))
 		{
-			err -= dy;
-			start.x += sx;
+			params.err -= params.dy;
+			start.x += params.sx;
 		}
-		if ((err * 2) < dx)
+		if (tmp < params.dx)
 		{
-			err += dx;
-			start.y += sy;
+			params.err += params.dx;
+			start.y += params.sy;
 		}
 	}
 }

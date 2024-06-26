@@ -6,7 +6,7 @@
 /*   By: sbruma <sbruma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 16:48:04 by sbruma            #+#    #+#             */
-/*   Updated: 2024/06/25 18:24:48 by sbruma           ###   ########.fr       */
+/*   Updated: 2024/06/26 13:04:45 by sbruma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,8 @@ void	fill_map(int fd, t_fdf *ptr)
 		x = 0;
 		while (split_line[x])
 		{
-			parse_point(split_line[x], &ptr->map[y * ptr->width + x], x, y);
+			if (y < ptr->height && x < ptr->width)
+				parse_point(split_line[x], &ptr->map[y * ptr->width + x], x, y);
 			x++;
 		}
 		y++;

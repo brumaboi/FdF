@@ -6,7 +6,7 @@
 /*   By: sbruma <sbruma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 22:23:10 by sbruma            #+#    #+#             */
-/*   Updated: 2024/06/25 17:24:04 by sbruma           ###   ########.fr       */
+/*   Updated: 2024/06/26 12:39:58 by sbruma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,15 @@ typedef struct s_fdf
 	t_map		*map;
 	t_point		*point;
 }	t_fdf;
+
+typedef struct s_line
+{
+	int	dx;
+	int	dy;
+	int	sx;
+	int	sy;
+	int	err;
+}	t_line;
 
 //fdf_utils.c
 void	key_hook(mlx_key_data_t keydata, void *param);
