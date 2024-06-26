@@ -6,7 +6,7 @@
 /*   By: sbruma <sbruma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/25 17:09:06 by sbruma            #+#    #+#             */
-/*   Updated: 2024/06/25 19:41:14 by sbruma           ###   ########.fr       */
+/*   Updated: 2024/06/26 12:10:30 by sbruma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,64 @@ void	get_isometric_coordinates(t_fdf *ptr, int x, int y,
 	*color = point.color;
 }
 
-void draw_line();
-//function that draws from point 1 to point 2
-//converting the coordinates to isometric
+void place_line(mlx_image_t *img, t_pos start, t_pos end, uint32_t color)
+{
+	int	dx;
+	int	dy;
+	int	sx;
+	int	sy;
+	int	err;
+
+	dx = abs(end.x - start.x);
+	dy = abs(end.y - start.y);
+	err = dx - dy;
+	if (start.x < end.x)
+		sx = 1;
+	else
+		sx = -1;
+
+	if (start.y < end.y)
+		sy = 1;
+	else
+		sy = -1;
+
+	while (1)
+	{
+		if (start.x == end.x && start.y == end.y)
+			break ;
+		if ((err * 2) > -dy)
+		{
+			err -= dy;
+			start.x += sx;
+		}
+		if ((err * 2) < dx)
+		{
+			err += dx;
+			start.y += sy;
+		}
+	}
+}
+
+void	draw_line(t_fdf *ptr, int *coords1, int *coords2,
+		uint32_t color1, uint32_t color2)
+{
+	uint32_t	color;
+	t_pos		start;
+	t_pos		end;
+
+	start.x = coords1[0];
+	start.y = coords1[1];
+	end.x = coords2[0];
+	end.y = coords2[1];
+	isometric_projection(&start.x, &start.y, coords1[2], ptr->scale);
+	isometric_projection(&end.x, &end.y, coords2[2], ptr->scale);
+	start.x += WINDOW_WIDTH / 2;
+	start.y += WINDOW_HEIGHT / 2;
+	end.x += WINDOW_WIDTH / 2;
+	end.y += WINDOW_HEIGHT / 2;
+	color = (color1 + color2) / 2;
+	place_line(ptr->canvas, start, end, color);
+}
 
 void	draw_x_line(t_fdf *ptr, int x, int y)
 {
