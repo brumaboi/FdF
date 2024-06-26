@@ -6,7 +6,7 @@
 /*   By: sbruma <sbruma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 22:23:10 by sbruma            #+#    #+#             */
-/*   Updated: 2024/06/26 12:39:58 by sbruma           ###   ########.fr       */
+/*   Updated: 2024/06/26 13:18:49 by sbruma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,12 +28,12 @@ typedef struct s_pos
 
 typedef struct s_map_xyz
 {
-	int	x;
-	int	y;
-	int	z;
-	int	max_z;
-	int	min_z;
-	uint32_t color;
+	int			x;
+	int			y;
+	int			z;
+	int			max_z;
+	int			min_z;
+	uint32_t	color;
 }	t_map;
 
 typedef struct s_point_xy
@@ -68,25 +68,25 @@ typedef struct s_line
 }	t_line;
 
 //fdf_utils.c
-void	key_hook(mlx_key_data_t keydata, void *param);
-void	fill_image(mlx_image_t *image, uint32_t color);
-void	error(char *message);
+void		key_hook(mlx_key_data_t keydata, void *param);
+void		fill_image(mlx_image_t *image, uint32_t color);
+void		error(char *message);
 
 //init_mlx.c
-void	init_mlx(t_fdf *ptr);
+void		init_mlx(t_fdf *ptr);
 
 //window_setup.c
-void	window_setup(char **argv, t_fdf *ptr);
+void		window_setup(char **argv, t_fdf *ptr);
 
 //init_fdf.c
-void    init_fdf(char *path, t_fdf *ptr);
-void    allocate_map_memory(t_fdf *ptr);
-void    read_map_dimensions(int fd, t_fdf *ptr);
-void    fill_map(int fd, t_fdf *ptr);
-void    parse_point(char *str, t_map *map, int x, int y);
-uint32_t hex_to_uint(char *hex);
-void    free_split(char **split);
+void		init_fdf(char *path, t_fdf *ptr);
+void		allocate_map_memory(t_fdf *ptr);
+void		read_map_dimensions(int fd, t_fdf *ptr);
+void		fill_map(int fd, t_fdf *ptr);
+void		parse_point(char *str, t_map *map, int x, int y);
+uint32_t	hex_to_uint(char *hex);
+void		free_split(char **split);
 
-void draw_map(t_fdf *ptr);
+void		draw_map(t_fdf *ptr);
 
 #endif

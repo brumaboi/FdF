@@ -6,7 +6,7 @@
 /*   By: sbruma <sbruma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/25 17:09:06 by sbruma            #+#    #+#             */
-/*   Updated: 2024/06/26 12:51:23 by sbruma           ###   ########.fr       */
+/*   Updated: 2024/06/26 14:21:05 by sbruma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,11 +127,47 @@ void	draw_y_line(t_fdf *ptr, int x, int y)
 	draw_line(ptr, coords1, coords2, color1, color2);
 }
 
+int	out_of_bounds(t_fdf *ptr)
+{
+	int			x;
+	int			y;
+	int			coords[3];
+	uint32_t	color;
+	t_pos		point;
+
+	y = 0;
+	while (y < ptr->height)
+	{
+		x = 0;
+		while (x < ptr->width)
+		{
+			get_isometric_coordinates(ptr, x, y, coords, &color);
+			point.x = coords[0];
+			point.y = coords[1];
+			isometric_projection(&point.x, &point.y, coords[2], ptr->scale);
+			point.x += WINDOW_WIDTH / 2;
+			point.y += WINDOW_HEIGHT / 2;
+			if (!in_bounds(point.x, point.y))
+				return (1);
+			x++;
+		}
+		y++;
+	}
+	return (0);
+}
+
+void	ft_rescale(t_fdf *ptr)
+{
+	while (out_of_bounds(ptr))
+		ptr->scale *= 0.9;
+}
+
 void	draw_map(t_fdf *ptr)
 {
 	int	y;
 	int	x;
 
+	ft_rescale(ptr);
 	y = 0;
 	while (y < ptr->height)
 	{

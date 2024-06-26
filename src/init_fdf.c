@@ -6,7 +6,7 @@
 /*   By: sbruma <sbruma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 16:48:04 by sbruma            #+#    #+#             */
-/*   Updated: 2024/06/26 13:04:45 by sbruma           ###   ########.fr       */
+/*   Updated: 2024/06/26 14:22:32 by sbruma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void	parse_point(char *str, t_map *map, int x, int y)
 	if (parts[1])
 		color = hex_to_uint(parts[1]);
 	else
-		color = 0xFFFFFFFF;
+		color = 0x000000FF;
 	map->x = x;
 	map->y = y;
 	map->z = z;
