@@ -6,7 +6,7 @@
 /*   By: sbruma <sbruma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/25 17:09:06 by sbruma            #+#    #+#             */
-/*   Updated: 2024/06/26 12:10:30 by sbruma           ###   ########.fr       */
+/*   Updated: 2024/06/26 12:25:34 by sbruma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,11 @@ void	get_isometric_coordinates(t_fdf *ptr, int x, int y,
 	*color = point.color;
 }
 
+static int	in_bounds(int x, int y)
+{
+	return (x >= 0 && x < WINDOW_WIDTH && y >= 0 && y < WINDOW_HEIGHT);
+}
+
 void place_line(mlx_image_t *img, t_pos start, t_pos end, uint32_t color)
 {
 	int	dx;
@@ -58,6 +63,8 @@ void place_line(mlx_image_t *img, t_pos start, t_pos end, uint32_t color)
 
 	while (1)
 	{
+		if (in_bounds(start.x, start.y))
+			mlx_put_pixel(img, start.x, start.y, color);
 		if (start.x == end.x && start.y == end.y)
 			break ;
 		if ((err * 2) > -dy)
