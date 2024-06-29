@@ -6,7 +6,7 @@
 /*   By: sbruma <sbruma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 10:37:09 by sbruma            #+#    #+#             */
-/*   Updated: 2024/05/22 18:17:24 by sbruma           ###   ########.fr       */
+/*   Updated: 2024/06/29 15:51:29 by sbruma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@
 # include <sys/stat.h>
 # include "ft_printf.h"
 # include "get_next_line.h"
+# include "ft_malloc.h"
 
 //ft_is
 int		ft_isalpha(int c);

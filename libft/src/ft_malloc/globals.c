@@ -1,30 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   fdf.c                                              :+:      :+:    :+:   */
+/*   globals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sbruma <sbruma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/20 22:20:20 by sbruma            #+#    #+#             */
-/*   Updated: 2024/06/29 16:33:49 by sbruma           ###   ########.fr       */
+/*   Created: 2024/06/29 12:48:44 by sbruma            #+#    #+#             */
+/*   Updated: 2024/06/29 14:59:28 by sbruma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/fdf.h"
+#include "../inc/ft_malloc.h"
 
-int	main(int argc, char **argv)
+t_link	**get_head(void)
 {
-	t_fdf	ptr;
+	static t_link	*head = NULL;
 
-	if (argc != 2)
-        error("Usage: ./fdf <filename>\n");
-	window_setup(argv, &ptr);
-	init_mlx(&ptr);
-	fill_image(ptr.canvas, 0x000000FF);
-    draw_map(&ptr);
-	mlx_key_hook(ptr.mlx, key_hook, &ptr);
-	mlx_loop(ptr.mlx);
-	mlx_terminate(ptr.mlx);
-	free_t_bad(ptr.map);
-	return (0);
+	return (&head);
+}
+
+int	*get_bad(void)
+{
+	static int	bad = -1;
+
+	return (&bad);
 }

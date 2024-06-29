@@ -6,7 +6,7 @@
 #    By: sbruma <sbruma@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/13 12:12:14 by sbruma            #+#    #+#              #
-#    Updated: 2024/05/22 18:35:25 by sbruma           ###   ########.fr        #
+#    Updated: 2024/06/29 16:29:57 by sbruma           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,6 +36,33 @@ RM				= rm -f
 AR				= ar rcs
 
 # Source Files
+FTIS_DIR		=	$(SRC_DIR)ft_is/ft_isalnum.c \
+					$(SRC_DIR)ft_is/ft_isalpha.c \
+					$(SRC_DIR)ft_is/ft_isascii.c \
+					$(SRC_DIR)ft_is/ft_isdigit.c \
+					$(SRC_DIR)ft_is/ft_isprint.c \
+					$(SRC_DIR)ft_is/ft_ismin.c \
+					$(SRC_DIR)ft_is/ft_ismax.c \
+					$(SRC_DIR)ft_is/ft_isspace.c
+					
+FTLST_DIR		=	$(SRC_DIR)ft_lst/ft_lstadd_back.c \
+					$(SRC_DIR)ft_lst/ft_lstadd_front.c \
+					$(SRC_DIR)ft_lst/ft_lstclear.c \
+					$(SRC_DIR)ft_lst/ft_lstdelone.c \
+					$(SRC_DIR)ft_lst/ft_lstiter.c \
+					$(SRC_DIR)ft_lst/ft_lstlast.c \
+					$(SRC_DIR)ft_lst/ft_lstmap.c \
+					$(SRC_DIR)ft_lst/ft_lstnew.c \
+					$(SRC_DIR)ft_lst/ft_lstsize.c 
+					
+FTMEM_DIR		=	$(SRC_DIR)ft_mem/ft_bzero.c \
+					$(SRC_DIR)ft_mem/ft_calloc.c \
+					$(SRC_DIR)ft_mem/ft_memchr.c \
+					$(SRC_DIR)ft_mem/ft_memcmp.c \
+					$(SRC_DIR)ft_mem/ft_memcpy.c \
+					$(SRC_DIR)ft_mem/ft_memmove.c \
+					$(SRC_DIR)ft_mem/ft_memset.c 
+					
 FTPSC_DIR		=	$(SRC_DIR)ft_piscine/ft_fibonacci.c \
 					$(SRC_DIR)ft_piscine/ft_find_next_prime.c \
 					$(SRC_DIR)ft_piscine/ft_is_prime.c \
@@ -50,23 +77,6 @@ FTPSC_DIR		=	$(SRC_DIR)ft_piscine/ft_fibonacci.c \
 					$(SRC_DIR)ft_piscine/ft_sort_int_tab.c \
 					$(SRC_DIR)ft_piscine/ft_swap.c
 
-FTIS_DIR		=	$(SRC_DIR)ft_is/ft_isalnum.c \
-					$(SRC_DIR)ft_is/ft_isalpha.c \
-					$(SRC_DIR)ft_is/ft_isascii.c \
-					$(SRC_DIR)ft_is/ft_isdigit.c \
-					$(SRC_DIR)ft_is/ft_isprint.c \
-					$(SRC_DIR)ft_is/ft_ismin.c \
-					$(SRC_DIR)ft_is/ft_ismax.c \
-					$(SRC_DIR)ft_is/ft_isspace.c \
-
-FTMEM_DIR		=	$(SRC_DIR)ft_mem/ft_bzero.c \
-					$(SRC_DIR)ft_mem/ft_calloc.c \
-					$(SRC_DIR)ft_mem/ft_memchr.c \
-					$(SRC_DIR)ft_mem/ft_memcmp.c \
-					$(SRC_DIR)ft_mem/ft_memcpy.c \
-					$(SRC_DIR)ft_mem/ft_memmove.c \
-					$(SRC_DIR)ft_mem/ft_memset.c 
-
 FTPUT_DIR		=	$(SRC_DIR)ft_put/ft_putchar_fd.c \
 					$(SRC_DIR)ft_put/ft_putchar.c \
 					$(SRC_DIR)ft_put/ft_putendl_fd.c \
@@ -74,14 +84,6 @@ FTPUT_DIR		=	$(SRC_DIR)ft_put/ft_putchar_fd.c \
 					$(SRC_DIR)ft_put/ft_putnbr_fd.c \
 					$(SRC_DIR)ft_put/ft_putstr_fd.c  \
 					$(SRC_DIR)ft_put/ft_putstr.c
-
-FTTO_DIR		=	$(SRC_DIR)ft_to/ft_atoi.c \
-					$(SRC_DIR)ft_to/ft_itoa.c \
-					$(SRC_DIR)ft_to/ft_tolower.c \
-					$(SRC_DIR)ft_to/ft_toupper.c \
-					$(SRC_DIR)ft_to/ft_utoa_base.c \
-					$(SRC_DIR)ft_to/ft_utoa.c \
-					$(SRC_DIR)ft_to/ft_atol.c
 
 FTSTR_DIR		=	$(SRC_DIR)ft_str/ft_split.c \
 					$(SRC_DIR)ft_str/ft_strcat.c \
@@ -105,15 +107,13 @@ FTSTR_DIR		=	$(SRC_DIR)ft_str/ft_split.c \
 					$(SRC_DIR)ft_str/ft_strtrim.c \
 					$(SRC_DIR)ft_str/ft_substr.c 
 
-FTLST_DIR		=	$(SRC_DIR)ft_lst/ft_lstadd_back.c \
-					$(SRC_DIR)ft_lst/ft_lstadd_front.c \
-					$(SRC_DIR)ft_lst/ft_lstclear.c \
-					$(SRC_DIR)ft_lst/ft_lstdelone.c \
-					$(SRC_DIR)ft_lst/ft_lstiter.c \
-					$(SRC_DIR)ft_lst/ft_lstlast.c \
-					$(SRC_DIR)ft_lst/ft_lstmap.c \
-					$(SRC_DIR)ft_lst/ft_lstnew.c \
-					$(SRC_DIR)ft_lst/ft_lstsize.c 
+FTTO_DIR		=	$(SRC_DIR)ft_to/ft_atoi.c \
+					$(SRC_DIR)ft_to/ft_itoa.c \
+					$(SRC_DIR)ft_to/ft_tolower.c \
+					$(SRC_DIR)ft_to/ft_toupper.c \
+					$(SRC_DIR)ft_to/ft_utoa_base.c \
+					$(SRC_DIR)ft_to/ft_utoa.c \
+					$(SRC_DIR)ft_to/ft_atol.c
 
 FTPRINTF_DIR	=	$(SRC_DIR)ft_printf/ft_printf.c \
 					$(SRC_DIR)ft_printf/for_udecimal.c \
@@ -126,44 +126,85 @@ FTPRINTF_DIR	=	$(SRC_DIR)ft_printf/ft_printf.c \
 GNL_DIR			=	$(SRC_DIR)get_next_line/get_next_line.c \
 					$(SRC_DIR)get_next_line/get_next_line_utils.c
 
+MALLOC_DIR		=	$(SRC_DIR)ft_malloc/ft_malloc.c \
+					$(SRC_DIR)ft_malloc/ft_malloc_bad.c \
+					$(SRC_DIR)ft_malloc/globals.c \
+					$(SRC_DIR)ft_malloc/list.c
+					
 # Concatenate all source files
-SRC 			= $(FTIS_DIR) $(FTMEM_DIR) $(FTPUT_DIR) $(FTTO_DIR) $(FTTO_DIR) $(FTSTR_DIR) $(FTLST_DIR) $(FTPRINTF_DIR) $(FTPSC_DIR) $(GNL_DIR)
+SRC 			= $(FTIS_DIR) $(FTLST_DIR) $(FTMEM_DIR) $(FTPSC_DIR) $(FTPUT_DIR) $(FTTO_DIR) $(FTSTR_DIR) $(FTTO_DIR) $(FTPRINTF_DIR) $(GNL_DIR) $(MALLOC_DIR)
 
 # Apply the pattern substitution to each source file in SRC and produce a corresponding list of object files in the OBJ_DIR
 OBJ 			= $(patsubst $(SRC_DIR)%.c,$(OBJ_DIR)%.o,$(SRC))
 
+# Bar vars
+TOTAL_OBJS = $(words $(OBJ))
+COUNT_FILE = .count
+MAX_WIDTH  = 66
+
 # Build rules
-all: 			$(NAME)
+all: initialize $(NAME) finish
 
-$(NAME): 		$(OBJ)
-				@echo "$(RED)𝘾𝙍𝙀𝘼𝙏𝙄𝙉𝙂 𝙇𝙄𝘽𝙁𝙏$(NC)"
-				@$(AR) $(NAME) $(OBJ) &
-				@pid=$$!; \
-				for i in 1 2 3; do \
-					sleep 1; \
-					if [ $$i -eq 1 ]; then \
-						echo "$(RED).$(NC)"; \
-					elif [ $$i -eq 2 ]; then \
-						echo "$(YELLOW).$(NC)"; \
-					elif [ $$i -eq 3 ]; then \
-						echo "$(GREEN).$(NC)"; \
-					fi; \
-				done; \
-				wait $$pid; \
-				echo "$(GREEN)𝘾𝙍𝙀𝘼𝙏𝙄𝙊𝙉 𝙎𝙐𝘾𝘾𝙀𝙎𝙎𝙁𝙐𝙇$(NC)"
+initialize:
+				@clear
+				@printf "$(RED) ██████╗ ██████╗ ███╗   ███╗██████╗ ██╗██╗     ██╗███╗   ██╗ ██████╗ $(NC)\n"
+				@printf "$(RED)██╔════╝██╔═══██╗████╗ ████║██╔══██╗██║██║     ██║████╗  ██║██╔════╝ $(NC)\n"
+				@printf "$(RED)██║     ██║   ██║██╔████╔██║██████╔╝██║██║     ██║██╔██╗ ██║██║  ███╗$(NC)\n"
+				@printf "$(RED)██║     ██║   ██║██║╚██╔╝██║██╔═══╝ ██║██║     ██║██║╚██╗██║██║   ██║$(NC)\n"
+				@printf "$(RED)╚██████╗╚██████╔╝██║ ╚═╝ ██║██║     ██║███████╗██║██║ ╚████║╚██████╔╝$(NC)\n"
+				@printf "$(RED) ╚═════╝ ╚═════╝ ╚═╝     ╚═╝╚═╝     ╚═╝╚══════╝╚═╝╚═╝  ╚═══╝ ╚═════╝ $(NC)\n"
+				@echo 0 > $(COUNT_FILE)
 
-$(OBJ_DIR)%.o:	$(SRC_DIR)%.c
+finish:
+				@printf "\033[6F\033[2K"  # Move cursor up one line
+				@printf "$(GREEN) ██████╗ ██████╗ ███╗   ███╗██████╗ ██╗██╗     ███████╗██████╗ $(NC)\033[E\n"
+				@printf "\033[F\033[2K"  # Move cursor up one line
+				@printf "$(GREEN)██╔════╝██╔═══██╗████╗ ████║██╔══██╗██║██║     ██╔════╝██╔══██╗$(NC)\033[E\n"
+				@printf "\033[F\033[2K"  # Move cursor up one line
+				@printf "$(GREEN)██║     ██║   ██║██╔████╔██║██████╔╝██║██║     █████╗  ██║  ██║$(NC)\033[E\n"
+				@printf "\033[F\033[2K"  # Move cursor up one line
+				@printf "$(GREEN)██║     ██║   ██║██║╚██╔╝██║██╔═══╝ ██║██║     ██╔══╝  ██║  ██║$(NC)\033[E\n"
+				@printf "\033[F\033[2K"  # Move cursor up one line
+				@printf "$(GREEN)╚██████╗╚██████╔╝██║ ╚═╝ ██║██║     ██║███████╗███████╗██████╔╝$(NC)\033[E\n"
+				@printf "\033[F\033[2K"  # Move cursor up one line
+				@printf "$(GREEN) ╚═════╝ ╚═════╝ ╚═╝     ╚═╝╚═╝     ╚═╝╚══════╝╚══════╝╚═════╝ $(NC)\033[E\n"
+				@rm -f $(COUNT_FILE)
+
+# Build library
+$(NAME): $(OBJ)
+				@$(AR) $(NAME) $(OBJ)
+
+$(OBJ_DIR)%.o: $(SRC_DIR)%.c
 				@mkdir -p $(@D)
 				@$(CC) $(CFLAGS) $(INC) -c $< -o $@
-
+				@COUNT=$$(( $$(cat $(COUNT_FILE) 2>/dev/null) + 1 )); \
+				echo $$COUNT > $(COUNT_FILE); \
+				PROGRESS=$$((COUNT * 100 / $(TOTAL_OBJS))); \
+				BAR=$$((PROGRESS * $(MAX_WIDTH) / 100)); \
+				printf "\r["; \
+				for i in $$(seq 1 $$BAR); do \
+					printf "\033[0;32m█\033[0m"; \
+				done; \
+				for i in $$(seq $$((BAR + 1)) $(MAX_WIDTH)); do \
+					printf "\033[0;31m█\033[0m"; \
+				done; \
+				printf "] ($$PROGRESS%%)"; \
+				if [ "$$COUNT" -eq "$(TOTAL_OBJS)" ]; then printf "\n"; fi
+				
 clean:
+				@clear;
 				@$(RM) -r $(OBJ_DIR)
 				@$(RM) .cache_exists
-				@echo "$(CYAN)𝘾𝙇𝙀𝘼𝙉𝙄𝙉𝙂$(NC)"
+				@printf "$(CYAN) ██████╗██╗     ███████╗ █████╗ ███╗   ██╗$(NC)\n"
+				@printf "$(CYAN)██╔════╝██║     ██╔════╝██╔══██╗████╗  ██║$(NC)\n"
+				@printf "$(CYAN)██║     ██║     █████╗  ███████║██╔██╗ ██║$(NC)\n"
+				@printf "$(CYAN)██║     ██║     ██╔══╝  ██╔══██║██║╚██╗██║$(NC)\n"
+				@printf "$(CYAN)╚██████╗███████╗███████╗██║  ██║██║ ╚████║$(NC)\n"
+				@printf "$(CYAN) ╚═════╝╚══════╝╚══════╝╚═╝  ╚═╝╚═╝  ╚═══╝$(NC)\n"
 
 fclean: 		clean
 				@$(RM) $(NAME)
 
 re: 			fclean all
 
-.PHONY: 		all clean fclean re
+.PHONY: 		all initialize finish clean fclean re

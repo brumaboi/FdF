@@ -6,7 +6,7 @@
 /*   By: sbruma <sbruma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 16:48:04 by sbruma            #+#    #+#             */
-/*   Updated: 2024/06/26 14:22:32 by sbruma           ###   ########.fr       */
+/*   Updated: 2024/06/29 16:35:42 by sbruma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ uint32_t	hex_to_uint(char *hex)
 	len = ft_strlen(hex);
 	color = 0;
 	base = 1;
+	hex += 2;
 	while (--len >= 0)
 	{
 		color += (ft_strchr(base_chars,
@@ -43,7 +44,7 @@ void	parse_point(char *str, t_map *map, int x, int y)
 	if (parts[1])
 		color = hex_to_uint(parts[1]);
 	else
-		color = 0x000000FF;
+		color = 0xFFFFFFFF;
 	map->x = x;
 	map->y = y;
 	map->z = z;
@@ -57,14 +58,18 @@ void	fill_map(int fd, t_fdf *ptr)
 	char	**split_line;
 	int		x;
 	int		y;
+	int		len;
 
 	y = 0;
 	line = get_next_line(fd);
 	while (line != NULL)
 	{
+		len= ft_strlen(line);
+		if (len > 0 && line[len - 1] == '\n')
+			line[len - 1] = '\0';
 		split_line = ft_split(line, ' ');
 		x = 0;
-		while (split_line[x])
+		while (split_line[x] != NULL)
 		{
 			if (y < ptr->height && x < ptr->width)
 				parse_point(split_line[x], &ptr->map[y * ptr->width + x], x, y);
@@ -79,7 +84,7 @@ void	fill_map(int fd, t_fdf *ptr)
 
 void	allocate_map_memory(t_fdf *ptr)
 {
-	ptr->map = (t_map *)malloc(sizeof(t_map) * (ptr->width * ptr->height));
+	ptr->map = (t_map *)malloc_t_bad(sizeof(t_map) * (ptr->width * ptr->height));
 	if (!ptr->map)
 		error("Memory allocation failed\n");
 }
@@ -91,10 +96,10 @@ void	free_split(char **split)
 	i = 0;
 	while (split[i])
 	{
-		free(split[i]);
+		free_t_bad(split[i]);
 		i++;
 	}
-	free(split);
+	free_t_bad(split);
 }
 
 void	read_map_dimensions(int fd, t_fdf *ptr)
@@ -112,7 +117,7 @@ void	read_map_dimensions(int fd, t_fdf *ptr)
 			while (split_line[ptr->width])
 				ptr->width++;
 		ptr->height++;
-		free(line);
+		free_t_bad(line);
 		free_split(split_line);
 		line = get_next_line(fd);
 	}

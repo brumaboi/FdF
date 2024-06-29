@@ -6,13 +6,13 @@
 #    By: sbruma <sbruma@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/20 22:20:12 by sbruma            #+#    #+#              #
-#    Updated: 2024/06/26 13:12:14 by sbruma           ###   ########.fr        #
+#    Updated: 2024/06/29 16:32:27 by sbruma           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME			=	fdf
 CC				=	cc
-CFLAGS			=	-Wall -Wextra -Werror -fsanitize=address -g
+CFLAGS			=	-Wall -Wextra -Werror
 RM				=	rm -f
 AR				=	ar rcs
 

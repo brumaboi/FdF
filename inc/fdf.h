@@ -6,7 +6,7 @@
 /*   By: sbruma <sbruma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 22:23:10 by sbruma            #+#    #+#             */
-/*   Updated: 2024/06/26 13:18:49 by sbruma           ###   ########.fr       */
+/*   Updated: 2024/06/29 16:32:57 by sbruma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,9 @@
 # define WINDOW_WIDTH 1024
 # define WINDOW_HEIGHT 1024
 # define ISO_ANGLE 0.523599
+
+# define malloc malloc_t_bad
+# define free free_t_bad
 
 typedef struct s_pos
 {
