@@ -3,36 +3,33 @@
 /*                                                        :::      ::::::::   */
 /*   draw.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sbruma <sbruma@student.42.fr>              +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/25 17:09:06 by sbruma            #+#    #+#             */
-/*   Updated: 2024/06/26 16:25:31 by sbruma           ###   ########.fr       */
+/*   Updated: 2024/09/10 19:39:58 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/fdf.h"
 
-void	isometric_projection(int *x, int *y, int z, float scale)
+void isometric_projection(int *x, int *y, int z, float scale)
 {
-	int	prev_x;
-	int	prev_y;
+    int prev_x = *x;
+    int prev_y = *y;
 
-	prev_x = *x;
-	prev_y = *y;
-	*x = (prev_x - prev_y) * cos(ISO_ANGLE) * scale;
-	*y = (prev_x + prev_y) * sin(ISO_ANGLE) * scale - z * scale;
+    *x = (prev_x - prev_y) * cos(ISO_ANGLE) * scale;
+    *y = (prev_x + prev_y) * sin(ISO_ANGLE) * scale - z * scale / 2;
 }
 
-void	get_isometric_coordinates(t_fdf *ptr, int x, int y,
-		int *coords, uint32_t *color)
+void get_isometric_coordinates(t_fdf *ptr, int x, int y, int *coords, uint32_t *color)
 {
-	t_map	point;
+    t_map point;
 
-	point = ptr->map[y * ptr->width + x];
-	coords[0] = point.x;
-	coords[1] = point.y;
-	coords[2] = point.z;
-	*color = point.color;
+    point = ptr->map[y * ptr->width + x];
+    coords[0] = point.x;
+    coords[1] = point.y;
+    coords[2] = point.z;
+    *color = point.color;
 }
 
 static int	in_bounds(int x, int y)
@@ -56,51 +53,75 @@ void	init_line(t_pos *start, t_pos *end, t_line *params)
 	params->err = params->dx - params->dy;
 }
 
-void place_line(mlx_image_t *img, t_pos start, t_pos end, uint32_t color)
+void place(mlx_image_t *img, t_pos start, t_pos end, uint32_t color, t_line *line)
 {
-	int		tmp;
-	t_line	params;
+    int e2;
 
-	init_line(&start, &end, &params);
-	while (1)
-	{
-		if (in_bounds(start.x, start.y))
-			mlx_put_pixel(img, start.x, start.y, color);
-		if (start.x == end.x && start.y == end.y)
-			break ;
-		tmp = params.err * 2;
-		if (tmp > -(params.dy))
-		{
-			params.err -= params.dy;
-			start.x += params.sx;
-		}
-		if (tmp < params.dx)
-		{
-			params.err += params.dx;
-			start.y += params.sy;
-		}
-	}
+    while (1)
+    {
+        if (in_bounds(start.x, start.y))
+            mlx_put_pixel(img, start.x, start.y, color);
+        if (start.x == end.x && start.y == end.y)
+            break;
+        e2 = line->err;
+        if (e2 > -line->dx)
+        {
+            line->err -= line->dy;
+            start.x += line->sx;
+        }
+        if (e2 < line->dy)
+        {
+            line->err += line->dx;
+            start.y += line->sy;
+        }
+    }
 }
 
-void	draw_line(t_fdf *ptr, int *coords1, int *coords2,
-		uint32_t color1, uint32_t color2)
+void place_line(mlx_image_t *img, t_pos start, t_pos end, uint32_t color)
 {
-	uint32_t	color;
-	t_pos		start;
-	t_pos		end;
+    t_line line;
 
-	start.x = coords1[0];
-	start.y = coords1[1];
-	end.x = coords2[0];
-	end.y = coords2[1];
-	isometric_projection(&start.x, &start.y, coords1[2], ptr->scale);
-	isometric_projection(&end.x, &end.y, coords2[2], ptr->scale);
-	start.x += WINDOW_WIDTH / 2;
-	start.y += WINDOW_HEIGHT / 2;
-	end.x += WINDOW_WIDTH / 2;
-	end.y += WINDOW_HEIGHT / 2;
-	color = (color1 + color2) / 2;
-	place_line(ptr->canvas, start, end, color);
+    line.dx = abs(end.x - start.x);
+    line.dy = abs(end.y - start.y);
+    if (start.x < end.x)
+        line.sx = 1;
+    else
+        line.sx = -1;
+    if (start.y < end.y)
+        line.sy = 1;
+    else
+        line.sy = -1;
+    if (line.dx > line.dy)
+        line.err = line.dx / 2;
+    else
+        line.err = -line.dy / 2;
+    color |= 0xFF000000;
+	place(img, start, end, color, &line);
+}
+
+void draw_line(t_fdf *ptr, int *coords1, int *coords2, uint32_t color1, uint32_t color2)
+{
+    t_pos start;
+    t_pos end;
+	uint32_t color;
+
+    start.x = coords1[0];
+    start.y = coords1[1];
+    end.x = coords2[0];
+    end.y = coords2[1];
+    isometric_projection(&start.x, &start.y, coords1[2], ptr->scale);
+    isometric_projection(&end.x, &end.y, coords2[2], ptr->scale);
+    start.x += WINDOW_WIDTH / 2;
+    start.y += WINDOW_HEIGHT / 2;
+    end.x += WINDOW_WIDTH / 2;
+    end.y += WINDOW_HEIGHT / 2;
+    if (start.x == end.x && start.y == end.y)
+        return ;
+    if (in_bounds(start.x, start.y) && in_bounds(end.x, end.y))
+	{
+        color = (color1 + color2) / 2;
+        place_line(ptr->canvas, start, end, color);
+    } 
 }
 
 void	draw_x_line(t_fdf *ptr, int x, int y)

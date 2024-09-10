@@ -3,53 +3,50 @@
 /*                                                        :::      ::::::::   */
 /*   init_fdf.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sbruma <sbruma@student.42.fr>              +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 16:48:04 by sbruma            #+#    #+#             */
-/*   Updated: 2024/06/29 16:35:42 by sbruma           ###   ########.fr       */
+/*   Updated: 2024/09/10 19:35:12 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/fdf.h"
 
-uint32_t	hex_to_uint(char *hex)
+uint32_t hex_to_uint(char *hex)
 {
-	uint32_t	color;
-	int			len;
-	int			base;
-	char		*base_chars;
+    uint32_t color;
+    char *base_chars;
+	int len;
 
 	base_chars = "0123456789ABCDEF";
-	len = ft_strlen(hex);
 	color = 0;
-	base = 1;
 	hex += 2;
-	while (--len >= 0)
-	{
-		color += (ft_strchr(base_chars,
-					ft_toupper(hex[len])) - base_chars) * base;
-		base *= 16;
-	}
-	return (color);
+	len = ft_strlen(hex);
+    while (--len >= 0)
+        color = color * 16 + (ft_strchr(base_chars, ft_toupper(*hex)) - base_chars);
+	// color |= 0xFF000000;
+    return (color);
 }
 
-void	parse_point(char *str, t_map *map, int x, int y)
+// Updated parse_point function with default color handling
+void parse_point(char *str, t_map *map, int x, int y)
 {
-	char		**parts;
-	int			z;
-	uint32_t	color;
+    char **parts;
+    int z;
+    uint32_t color;
 
-	parts = ft_split(str, ',');
-	z = ft_atoi(parts[0]);
-	if (parts[1])
-		color = hex_to_uint(parts[1]);
-	else
-		color = 0xFFFFFFFF;
-	map->x = x;
-	map->y = y;
-	map->z = z;
-	map->color = color;
-	free_split(parts);
+    parts = ft_split(str, ',');
+    z = ft_atoi(parts[0]);
+    if (parts[1])
+        color = hex_to_uint(parts[1]);
+    else
+        color = 0xFFFFFFFF;
+	// color |= 0xFF000000;
+    map->x = x;
+    map->y = y;
+    map->z = z;
+    map->color = color;
+    free_split(parts);
 }
 
 void	fill_map(int fd, t_fdf *ptr)
