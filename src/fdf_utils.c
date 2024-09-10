@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 22:20:33 by sbruma            #+#    #+#             */
-/*   Updated: 2024/09/10 19:30:56 by marvin           ###   ########.fr       */
+/*   Updated: 2024/09/10 22:03:05 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,17 +31,20 @@ void	fill_image(mlx_image_t *image, uint32_t color)
 {
 	uint32_t	x;
 	uint32_t	y;
-
-	x = 0;
-	y = 0;
-	while (y < image->height)
+	
+	if (image->width > 0 && image->height > 0)
 	{
-		mlx_put_pixel(image, x, y, color);
-		x++;
-		if (x == image->width)
+		x = 0;
+		y = 0;
+		while (y < image->height)
 		{
-			y++;
-			x = 0;
+			mlx_put_pixel(image, x, y, color);
+			x++;
+			if (x == image->width)
+			{
+				y++;
+				x = 0;
+			}
 		}
 	}
 }

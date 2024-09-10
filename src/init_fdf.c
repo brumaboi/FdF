@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 16:48:04 by sbruma            #+#    #+#             */
-/*   Updated: 2024/09/10 19:35:12 by marvin           ###   ########.fr       */
+/*   Updated: 2024/09/10 22:03:19 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ uint32_t hex_to_uint(char *hex)
 	len = ft_strlen(hex);
     while (--len >= 0)
         color = color * 16 + (ft_strchr(base_chars, ft_toupper(*hex)) - base_chars);
-	// color |= 0xFF000000;
     return (color);
 }
 
@@ -41,7 +40,6 @@ void parse_point(char *str, t_map *map, int x, int y)
         color = hex_to_uint(parts[1]);
     else
         color = 0xFFFFFFFF;
-	// color |= 0xFF000000;
     map->x = x;
     map->y = y;
     map->z = z;
@@ -49,41 +47,51 @@ void parse_point(char *str, t_map *map, int x, int y)
     free_split(parts);
 }
 
-void	fill_map(int fd, t_fdf *ptr)
+void fill_map(int fd, t_fdf *ptr)
 {
-	char	*line;
-	char	**split_line;
-	int		x;
-	int		y;
-	int		len;
+    char *line;
+    char **split_line;
+    int x, y;
 
-	y = 0;
-	line = get_next_line(fd);
-	while (line != NULL)
-	{
-		len= ft_strlen(line);
-		if (len > 0 && line[len - 1] == '\n')
-			line[len - 1] = '\0';
-		split_line = ft_split(line, ' ');
-		x = 0;
-		while (split_line[x] != NULL)
-		{
-			if (y < ptr->height && x < ptr->width)
-				parse_point(split_line[x], &ptr->map[y * ptr->width + x], x, y);
-			x++;
-		}
-		y++;
-		free(line);
-		free_split(split_line);
-		line = get_next_line(fd);
-	}
+    y = 0;
+    line = get_next_line(fd);
+    while (line != NULL)
+    {
+        int len = ft_strlen(line);
+        if (len > 0 && line[len - 1] == '\n')
+            line[len - 1] = '\0';
+
+        split_line = ft_split(line, ' ');
+        x = 0;
+        while (split_line[x] != NULL)
+        {
+            if (y < ptr->height && x < ptr->width)
+                parse_point(split_line[x], &ptr->map[y * ptr->width + x], x, y);
+            x++;
+        }
+        y++;
+        free(line);
+        free_split(split_line);
+        line = get_next_line(fd);
+    }
 }
 
-void	allocate_map_memory(t_fdf *ptr)
+void allocate_map_memory(t_fdf *ptr)
 {
-	ptr->map = (t_map *)malloc_t_bad(sizeof(t_map) * (ptr->width * ptr->height));
-	if (!ptr->map)
-		error("Memory allocation failed\n");
+    int i;
+
+    ptr->map = (t_map *)malloc_t_bad(sizeof(t_map) * (ptr->width * ptr->height));
+    if (!ptr->map)
+        error("Memory allocation failed\n");
+    i = 0;
+    while (i < ptr->width * ptr->height)
+    {
+        ptr->map[i].x = 0;
+        ptr->map[i].y = 0;
+        ptr->map[i].z = 0;
+        ptr->map[i].color = 0xFFFFFFFF;
+        i++;
+    }
 }
 
 void	free_split(char **split)

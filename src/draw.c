@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/25 17:09:06 by sbruma            #+#    #+#             */
-/*   Updated: 2024/09/10 19:39:58 by marvin           ###   ########.fr       */
+/*   Updated: 2024/09/10 22:03:01 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,9 @@ void isometric_projection(int *x, int *y, int z, float scale)
 void get_isometric_coordinates(t_fdf *ptr, int x, int y, int *coords, uint32_t *color)
 {
     t_map point;
-
-    point = ptr->map[y * ptr->width + x];
+	
+	if (x >= 0 && x < ptr->width && y >= 0 && y < ptr->height)
+    	point = ptr->map[y * ptr->width + x];
     coords[0] = point.x;
     coords[1] = point.y;
     coords[2] = point.z;
@@ -145,7 +146,7 @@ void	draw_y_line(t_fdf *ptr, int x, int y)
 
 	get_isometric_coordinates(ptr, x, y, coords1, &color1);
 	get_isometric_coordinates(ptr, x, y + 1, coords2, &color2);
-	draw_line(ptr, coords1, coords2, color1, color2);
+	draw_line(ptr, coords1, coords2, color1, color2);  
 }
 
 int	out_of_bounds(t_fdf *ptr)
